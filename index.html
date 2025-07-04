@@ -69,7 +69,7 @@
       .then(config => {
         const downloadUrl = `https://drive.google.com/uc?export=download&id=${config.fileId}`;
         document.getElementById('download-link').href = downloadUrl;
-        document.getElementById('version-info').textContent = `Version: ${config.version} | Updated at: ${config.updatedAt}`;
+        document.getElementById('version-info').textContent = `Version: ${config.version_name} | Updated at: ${config.updatedAt}`;
       })
       .catch(error => {
         console.error('Failed to load config.json:', error);
