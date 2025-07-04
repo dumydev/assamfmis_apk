@@ -44,6 +44,8 @@
       font-weight: 600;
       transition: background-color 0.3s ease;
       cursor: pointer;
+      pointer-events: none;
+      opacity: 0.6;
     }
     a.download-btn:hover {
       background-color: #0056b3;
@@ -55,7 +57,7 @@
     <h1>Assam FMIS App</h1>
     <p>Click the button below to download the latest version of the app</p>
     <p id="version-info">Loading version info...</p>
-    <a class="download-btn" id="download-link" href="#" download>Download APK</a>
+    <a class="download-btn" id="download-link" href="#" download>Loading...</a>
   </div>
 
   <script>
@@ -68,12 +70,21 @@
       })
       .then(config => {
         const downloadUrl = `https://drive.google.com/uc?export=download&id=${config.fileId}`;
-        document.getElementById('download-link').href = downloadUrl;
+        const dlBtn = document.getElementById('download-link');
+        dlBtn.href = downloadUrl;
+        dlBtn.textContent = `Download APK v${config.version_name}`;
+        dlBtn.style.pointerEvents = 'auto';
+        dlBtn.style.opacity = '1';
+
         document.getElementById('version-info').textContent = `Version: ${config.version_name} | Updated at: ${config.updatedAt}`;
       })
       .catch(error => {
-        console.error('Failed to load config.json:', error);
+        console.error('Failed to load version.json:', error);
         document.getElementById('version-info').textContent = 'Version info could not be loaded.';
+        const dlBtn = document.getElementById('download-link');
+        dlBtn.textContent = 'Download not available';
+        dlBtn.style.pointerEvents = 'none';
+        dlBtn.style.opacity = '0.5';
       });
   </script>
 </body>
